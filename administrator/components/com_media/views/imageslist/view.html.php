@@ -42,6 +42,7 @@ class MediaViewImagesList extends JViewLegacy
 		$this->baseURL = COM_MEDIA_BASEURL;
 		$this->images = &$images;
 		$this->folders = &$folders;
+		$this->docs = $this->get('documents');
 		$this->state = &$state;
 
 		parent::display($tpl);

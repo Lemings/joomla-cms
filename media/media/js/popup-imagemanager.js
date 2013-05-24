@@ -99,26 +99,52 @@ var ImageManager = this.ImageManager = {
 		var caption	= this.fields.caption.get('value');
 
 		if (url != '') {
-			// Set alt attribute
-			if (alt != '') {
-				extra = extra + 'alt="'+alt+'" ';
-			} else {
-				extra = extra + 'alt="" ';
-			}
-			// Set align attribute
-			if (align != '') {
-				extra = extra + 'align="'+align+'" ';
-			}
-			// Set align attribute
-			if (title != '') {
-				extra = extra + 'title="'+title+'" ';
-			}
-			// Set align attribute
-			if (caption != '') {
-				extra = extra + 'class="caption" ';
+
+			var isImage = false;
+			// Get image extension
+			var extension = url.split('.').pop();
+
+			var imgExt = image_extensions.split(',');
+			for (var i = 0; i < imgExt.length; i++)
+			{
+				if (imgExt[i].match(extension))
+				{
+					isImage = true
+				}
 			}
 
-			var tag = "<img src=\""+url+"\" "+extra+"/>";
+			if (isImage == true)
+			{
+				// Set alt attribute
+				if (alt != '') {
+					extra = extra + 'alt="'+alt+'" ';
+				} else {
+					extra = extra + 'alt="" ';
+				}
+				// Set align attribute
+				if (align != '') {
+					extra = extra + 'align="'+align+'" ';
+				}
+				// Set align attribute
+				if (title != '') {
+					extra = extra + 'title="'+title+'" ';
+				}
+				// Set align attribute
+				if (caption != '') {
+					extra = extra + 'class="caption" ';
+				}
+
+				var tag = "<img src=\""+url+"\" "+extra+"/>";
+			}
+			else
+			{
+				// If title field is not blank use it instead of file name
+				if (title == '')
+				{
+					title = url.split('/').pop();
+				}
+				var tag = "<a href=\"" + url + "\">" + title + "</a>";
+			}
 		}
 
 		window.parent.jInsertEditorText(tag, this.editor);
@@ -212,8 +238,8 @@ var ImageManager = this.ImageManager = {
 			var key = unescape( KeyVal[0] );
 			var val = unescape( KeyVal[1] ).replace(/\+ /g, ' ');
 			params[key] = val;
-	   }
-	   return params;
+	}
+	return params;
 	},
 
 	refreshFrame: function()

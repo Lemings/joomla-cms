@@ -20,6 +20,20 @@ defined('_JEXEC') or die;
 		$this->setImage($i);
 		echo $this->loadTemplate('image');
 	endfor; ?>
+
+	<?php for ($i = 0, $n = count($this->docs); $i < $n; $i++) :
+
+		if (isset($this->docs[$i]))
+		{
+			$this->_tmp_doc = &$this->docs[$i];
+		}
+		else
+		{
+			$this->_tmp_doc = new JObject;
+		}
+
+		echo $this->loadTemplate('documents');
+	endfor; ?>
 </ul>
 <?php } else { ?>
 	<div id="media-noimages">
